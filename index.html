@@ -1,451 +1,390 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AmmarSysAdmin — Linux & Server Management</title>
-  <meta name="description" content="AmmarSysAdmin — Linux Administrator. Server setup, security, web servers (Apache/Nginx), Bash scripting." />
-  <style>
-    :root{
-      --bg-start:#6a11cb;
-      --bg-end:#2575fc;
-      --card-bg: rgba(255,255,255,0.08);
-      --accent:#ffdd00;
-      --text:#0f1720;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%; margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
-    body{
-      color:white;
-      background: linear-gradient(135deg,var(--bg-start),var(--bg-end));
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:36px 16px;
-      overflow-x:hidden;
-    }
-    canvas#particles{
-      position:absolute;
-      top:0; left:0;
-      width:100%; height:100%;
-      z-index:0;
-      pointer-events:none;
-    }
-    .wrap{
-      position:relative;
-      z-index:1;
-      width:100%;
-      max-width:980px;
-      margin:12px auto;
-      animation:fadeIn 1s ease both;
-    }
-    header{
-      display:flex;
-      gap:18px;
-      align-items:center;
-      padding:18px;
-      border-radius:12px;
-      flex-wrap:wrap;
-      position:relative;
-    }
-    .logo{
-      width:84px;
-      height:84px;
-      border-radius:50%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:700;
-      font-size:24px;
-      box-shadow:0 6px 25px rgba(0,0,0,0.3);
-      transform-origin:center;
-      animation:logoPulse 2.5s ease-in-out infinite;
-    }
-    @keyframes logoPulse{
-      0%,100%{ transform: scale(1);}
-      50%{ transform: scale(1.05);}
-    }
-    .hero{
-      flex:1;
-      text-align:left;
-    }
-    .title{
-      margin:0;
-      font-size:30px;
-      color:white;
-      line-height:1.1;
-      font-weight:700;
-      text-shadow:0 2px 12px rgba(0,0,0,0.35);
-      animation:fadeInUp 1.2s ease forwards;
-      opacity:0;
-    }
-    .subtitle{
-      margin:8px 0 0 0;
-      color:white;
-      font-size:15px;
-      opacity:0;
-      animation:fadeInUp 1.4s ease forwards;
-    }
-    .actions{
-      margin-top:14px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      opacity:0;
-      animation:fadeInUp 1.6s ease forwards;
-    }
-    .btn{
-      display:inline-block;
-      padding:10px 18px;
-      border-radius:14px;
-      text-decoration:none;
-      font-weight:700;
-      cursor:pointer;
-      border:0;
-      transition: transform .2s ease, box-shadow .2s ease;
-      box-shadow:0 6px 20px rgba(0,0,0,0.25);
-    }
-    .btn-primary{
-      background: var(--accent);
-      color: #0f1720;
-      border:1px solid rgba(255,255,255,0.2);
-    }
-    .btn-primary:hover{
-      transform:translateY(-3px) scale(1.05);
-      box-shadow:0 8px 25px rgba(0,0,0,0.35);
-    }
-    .btn-secondary{
-      background: rgba(255,255,255,0.15);
-      color:white;
-      border:1px solid rgba(255,255,255,0.25);
-    }
-    .btn-secondary:hover{
-      transform:translateY(-3px) scale(1.03);
-      box-shadow:0 8px 22px rgba(0,0,0,0.25);
-    }
-    main{
-      margin-top:20px;
-      display:flex;
-      gap:20px;
-      flex-direction:column;
-    }
-    .card {
-      background: var(--card-bg);
-      padding:18px;
-      border-radius:14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-      color:white;
-      animation:fadeInUp 1.8s ease forwards;
-      opacity:0;
-    }
-    .services-grid, .portfolio-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap:14px;
-      margin-top:12px;
-    }
-    .service, .portfolio-item{
-      background: rgba(255,255,255,0.05);
-      padding:16px;
-      border-radius:12px;
-      min-height:110px;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      transition: transform .2s ease, box-shadow .2s ease;
-      cursor:pointer;
-    }
-    .service:hover, .portfolio-item:hover{
-      transform: translateY(-8px);
-      box-shadow: 0 16px 30px rgba(0,0,0,0.28);
-    }
-    .service .icon{
-      width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
-      background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
-      color:white;font-weight:700;font-size:18px;
-    }
-    .service h4, .portfolio-item h4{ margin:0;font-size:16px;color:white}
-    .service p, .portfolio-item p{ margin:0;color:rgba(255,255,255,0.95); font-size:13px; line-height:1.35 }
-    #about p{ color:#0f1720; font-size:15px; margin:6px 0 0 0; line-height:1.5; }
-    .about-wrap{ background:white;padding:18px;border-radius:14px;color:var(--text); box-shadow:0 12px 30px rgba(2,6,23,0.12) }
-    footer{
-      margin-top:20px;
-      text-align:center;
-      color:white;
-      font-size:13px;
-      opacity:0.95;
-      animation:fadeInUp 2s ease forwards;
-      opacity:0;
-    }
-    @keyframes fadeIn{ from {opacity:0} to{opacity:1} }
-    @keyframes fadeInUp{ from {opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
-    @media (max-width:720px){
-      .logo{width:64px;height:64px;font-size:20px}
-      .title{font-size:22px}
-      .hero{text-align:center}
-      .actions{justify-content:center}
-    }
-    /* Modal styles for portfolio */
-    .modal{
-      display:none; 
-      position:fixed; 
-      z-index:10; 
-      left:0; top:0; width:100%; height:100%; 
-      background:rgba(0,0,0,0.85);
-      justify-content:center;
-      align-items:center;
-    }
-    .modal-content{
-      background:white; color:#0f1720;
-      padding:20px; border-radius:12px; max-width:600px;
-      max-height:80%; overflow:auto; text-align:left;
-      position:relative;
-    }
-    .modal-content img{ width:100%; border-radius:10px; margin-bottom:10px; }
-    .modal-close{
-      position:absolute; top:10px; right:12px; cursor:pointer; font-size:20px; font-weight:bold;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AmmarSysAdmin — Linux & Server Management</title>
+<meta name="description" content="AmmarSysAdmin — Linux Administrator. Server setup, security, web servers (Apache/Nginx), Bash scripting." />
+<style>
+:root{
+  --bg-start:#6a11cb;
+  --bg-end:#2575fc;
+  --card-bg: rgba(255,255,255,0.08);
+  --accent:#ffdd00;
+  --text:#0f1720;
+}
+*{box-sizing:border-box}
+html,body{height:100%; margin:0; font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+body{
+  color:white;
+  background: linear-gradient(135deg,var(--bg-start),var(--bg-end));
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:36px 16px;
+  overflow-x:hidden;
+}
+canvas#particles{
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+.wrap{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:980px;
+  margin:12px auto;
+  animation:fadeIn 1s ease both;
+}
+header{
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:18px;
+  border-radius:12px;
+  flex-wrap:wrap;
+  position:relative;
+}
+.logo{
+  width:84px;
+  height:84px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:24px;
+  box-shadow:0 6px 25px rgba(0,0,0,0.3);
+  transform-origin:center;
+  animation:logoPulse 2.5s ease-in-out infinite;
+}
+@keyframes logoPulse{
+  0%,100%{ transform: scale(1);}
+  50%{ transform: scale(1.05);}
+}
+.hero{
+  flex:1;
+  text-align:left;
+}
+.title{
+  margin:0;
+  font-size:30px;
+  color:white;
+  line-height:1.1;
+  font-weight:700;
+  text-shadow:0 2px 12px rgba(0,0,0,0.35);
+}
+.subtitle{
+  margin:8px 0 0 0;
+  color:white;
+  font-size:15px;
+  min-height:20px;
+}
+.actions{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:700;
+  cursor:pointer;
+  border:0;
+  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
+.btn-primary{
+  background: var(--accent);
+  color: #0f1720;
+  border:1px solid rgba(255,255,255,0.2);
+}
+.btn-primary:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 8px 25px rgba(0,0,0,0.35);
+}
+.btn-secondary{
+  background: rgba(255,255,255,0.15);
+  color:white;
+  border:1px solid rgba(255,255,255,0.25);
+}
+.btn-secondary:hover{
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 8px 22px rgba(0,0,0,0.25);
+}
+main{
+  margin-top:20px;
+  display:flex;
+  gap:20px;
+  flex-direction:column;
+}
+.card {
+  background: var(--card-bg);
+  padding:18px;
+  border-radius:14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  color:white;
+}
+.services-grid, .portfolio-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+  margin-top:12px;
+}
+.service, .portfolio-item{
+  background: rgba(255,255,255,0.05);
+  padding:16px;
+  border-radius:12px;
+  min-height:110px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition: transform .2s ease, box-shadow .2s ease;
+  cursor:pointer;
+}
+.service:hover, .portfolio-item:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 16px 30px rgba(0,0,0,0.28);
+}
+.service .icon{
+  width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  color:white;font-weight:700;font-size:18px;
+}
+.service h4, .portfolio-item h4{ margin:0;font-size:16px;color:white}
+.service p, .portfolio-item p{ margin:0;color:rgba(255,255,255,0.95); font-size:13px; line-height:1.35 }
+#about p{ color:#0f1720; font-size:15px; margin:6px 0 0 0; line-height:1.5; }
+.about-wrap{ background:white;padding:18px;border-radius:14px;color:var(--text); box-shadow:0 12px 30px rgba(2,6,23,0.12) }
+footer{
+  margin-top:20px;
+  text-align:center;
+  color:white;
+  font-size:13px;
+  opacity:0.95;
+}
+@media (max-width:720px){
+  .logo{width:64px;height:64px;font-size:20px}
+  .title{font-size:22px}
+  .hero{text-align:center}
+  .actions{justify-content:center}
+}
+/* Modal styles for portfolio */
+.modal{
+  display:none; 
+  position:fixed; 
+  z-index:10; 
+  left:0; top:0; width:100%; height:100%; 
+  background:rgba(0,0,0,0.85);
+  justify-content:center;
+  align-items:center;
+}
+.modal-content{
+  background:white; color:#0f1720;
+  padding:20px; border-radius:12px; max-width:600px;
+  max-height:80%; overflow:auto; text-align:left;
+  position:relative;
+}
+.modal-content img{ width:100%; border-radius:10px; margin-bottom:10px; }
+.modal-close{
+  position:absolute; top:10px; right:12px; cursor:pointer; font-size:20px; font-weight:bold;
+}
+</style>
 </head>
 <body>
-  <canvas id="particles"></canvas>
-  <div class="wrap">
-    <header>
-      <svg class="logo" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#6a11cb;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#2575fc;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <circle cx="42" cy="42" r="42" fill="url(#grad1)" />
-        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-              font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="white">AS</text>
-      </svg>
+<canvas id="particles"></canvas>
+<div class="wrap">
+<header>
+  <svg class="logo" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#6a11cb;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#2575fc;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+    <circle cx="42" cy="42" r="42" fill="url(#grad1)" />
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+          font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="white">AS</text>
+  </svg>
 
-      <div class="hero">
-        <h1 class="title">AmmarSysAdmin</h1>
-        <div class="subtitle" id="subtitle">Linux Administrator • Server Management • Web Servers</div>
-        <div class="actions">
-          <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
-          <a class="btn btn-secondary" href="#services">View My Services</a>
-        </div>
-      </div>
-    </header>
-
-    <main>
-      <section class="card about-wrap" id="about">
-        <h3>About Me</h3>
-        <p>
-          I'm AmmarSysAdmin, a professional Linux Administrator. I specialize in CentOS, Ubuntu, and Red Hat servers. 
-          I ensure your servers are secure, optimized, and maintained for reliable uptime. 
-          My work includes server setup, security hardening, web server configuration, and automation through Bash scripting.
-        </p>
-      </section>
-
-      <section class="card" id="services">
-        <h3>My Services</h3>
-        <div class="services-grid">
-          <div class="service">
-            <div class="icon">🖥️</div>
-            <h4>Linux Server Setup</h4>
-            <p>Install and configure CentOS, Ubuntu, or Red Hat with optimized settings for web hosting and apps.</p>
-          </div>
-          <div class="service">
-            <div class="icon">🔒</div>
-            <h4>Security Configuration</h4>
-            <p>Firewall rules, SSH hardening, updates, and best practices to protect your server and data.</p>
-          </div>
-          <div class="service">
-            <div class="icon">🌐</div>
-            <h4>DNS & Networking</h4>
-            <p>Configure DNS records, hostnames, and network settings to ensure reliable domain and connectivity.</p>
-          </div>
-          <div class="service">
-            <div class="icon">🔑</div>
-            <h4>SSH Access Setup</h4>
-            <p>Secure SSH key setup, user management, and permission control for safe remote administration.</p>
-          </div>
-          <div class="service">
-            <div class="icon">⚙️</div>
-            <h4>Bash Scripting</h4>
-            <p>Automate tasks with Bash scripts: backups, updates, monitoring tasks and routine maintenance.</p>
-          </div>
-          <div class="service">
-            <div class="icon">🧩</div>
-            <h4>Server Management</h4>
-            <p>Ongoing maintenance, log checks, troubleshooting, and performance tuning to keep your server stable.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Portfolio Section -->
-      <section class="card" id="portfolio">
-        <h3>My Portfolio</h3>
-        <div class="portfolio-grid">
-          <div class="portfolio-item" data-title="Linux Server Setup" data-description="CentOS and Ubuntu server configured for hosting multiple websites." data-img="https://via.placeholder.com/400x200.png?text=Server+Setup">
-            <img src="https://via.placeholder.com/400x200.png?text=Server+Setup" alt="Server Setup">
-            <h4>Linux Server Setup</h4>
-            <p>CentOS and Ubuntu server configured for hosting multiple websites.</p>
-          </div>
-          <div class="portfolio-item" data-title="Server Security" data-description="Firewall rules, SSH hardening, and monitoring implemented." data-img="https://via.placeholder.com/400x200.png?text=Security">
-            <img src="https://via.placeholder.com/400x200.png?text=Security" alt="Server Security">
-            <h4>Server Security</h4>
-            <p>Firewall rules, SSH hardening, and monitoring implemented.</p>
-          </div>
-          <div class="portfolio-item" data-title="Bash Scripts" data-description="Automated backups, log monitoring, and server maintenance scripts." data-img="https://via.placeholder.com/400x200.png?text=Bash+Scripts">
-            <img src="https://via.placeholder.com/400x200.png?text=Bash+Scripts" alt="Bash Scripts">
-            <h4>Bash Scripts</h4>
-            <p>Automated backups, log monitoring, and server maintenance scripts.</p>
-          </div>
-          <div class="portfolio-item" data-title="DNS & Networking" data-description="DNS records configured for multiple domains with reliability." data-img="https://via.placeholder.com/400x200.png?text=DNS">
-            <img src="https://via.placeholder.com/400x200.png?text=DNS" alt="DNS & Networking">
-            <h4>DNS & Networking</h4>
-            <p>DNS records configured for multiple domains with reliability.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="card" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
-        <div style="flex:1;min-width:220px">
-          <h4>Ready to start?</h4>
-          <p style="margin:0;color:rgba(15,23,32,0.9)">Click the button to contact me on Fiverr. I'll review your requirements and respond with clear next steps.</p>
-        </div>
-        <div style="min-width:220px;text-align:right">
-          <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
-        </div>
-      </section>
-
-      <footer>
-        © <span id="year"></span> AmmarSysAdmin — Linux & Server Management
-      </footer>
-    </main>
-  </div>
-
-  <!-- Modal for portfolio -->
-  <div class="modal" id="portfolioModal">
-    <div class="modal-content">
-      <span class="modal-close" id="modalClose">&times;</span>
-      <img id="modalImg" src="" alt="">
-      <h4 id="modalTitle"></h4>
-      <p id="modalDesc"></p>
+  <div class="hero">
+    <h1 class="title">AmmarSysAdmin</h1>
+    <div class="subtitle" id="subtitle"></div>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
+      <a class="btn btn-secondary" href="#services">View My Services</a>
     </div>
   </div>
+</header>
 
-  <script>
-    // Set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
+<main>
+<section class="card about-wrap" id="about">
+<h3>About Me</h3>
+<p>
+I'm AmmarSysAdmin, a professional Linux Administrator. I specialize in CentOS, Ubuntu, and Red Hat servers. 
+I ensure your servers are secure, optimized, and maintained for reliable uptime. 
+My work includes server setup, security hardening, web server configuration, and automation through Bash scripting.
+</p>
+</section>
 
-    // Smooth scroll
-    (function(){
-      var btns = document.querySelectorAll('a[href^="#"]');
-      for(var i=0;i<btns.length;i++){
-        btns[i].addEventListener('click', function(e){
-          var href = this.getAttribute('href');
-          if(href && href.startsWith('#')){
-            e.preventDefault();
-            var el = document.querySelector(href);
-            if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
-          }
-        });
-      }
-    })();
+<section class="card" id="services">
+<h3>My Services</h3>
+<div class="services-grid">
+<div class="service"><div class="icon">🖥️</div><h4>Linux Server Setup</h4><p>Install and configure CentOS, Ubuntu, or Red Hat with optimized settings for web hosting and apps.</p></div>
+<div class="service"><div class="icon">🔒</div><h4>Security Configuration</h4><p>Firewall rules, SSH hardening, updates, and best practices to protect your server and data.</p></div>
+<div class="service"><div class="icon">🌐</div><h4>DNS & Networking</h4><p>Configure DNS records, hostnames, and network settings to ensure reliable domain and connectivity.</p></div>
+<div class="service"><div class="icon">🔑</div><h4>SSH Access Setup</h4><p>Secure SSH key setup, user management, and permission control for safe remote administration.</p></div>
+<div class="service"><div class="icon">⚙️</div><h4>Bash Scripting</h4><p>Automate tasks with Bash scripts: backups, updates, monitoring tasks and routine maintenance.</p></div>
+<div class="service"><div class="icon">🧩</div><h4>Server Management</h4><p>Ongoing maintenance, log checks, troubleshooting, and performance tuning to keep your server stable.</p></div>
+</div>
+</section>
 
-    // Typing effect for subtitle
-    const subtitleEl = document.getElementById('subtitle');
-    const texts = ["Linux Administrator", "Server Management", "Web Servers", "Security & Bash Scripting"];
-    let index = 0;
-    let charIndex = 0;
-    let currentText = "";
-    function typeText(){
-      if(charIndex < texts[index].length){
-        currentText += texts[index][charIndex];
-        subtitleEl.textContent = currentText;
-        charIndex++;
-        setTimeout(typeText, 100);
-      } else {
-        setTimeout(eraseText, 1000);
+<!-- Portfolio Section -->
+<section class="card" id="portfolio">
+<h3>Portfolio</h3>
+<div class="portfolio-grid">
+<div class="portfolio-item" data-title="Linux Server Setup" data-description="Configured CentOS and Ubuntu servers for clients." data-img="https://via.placeholder.com/400x200.png?text=Server+Setup">
+<img src="https://via.placeholder.com/400x200.png?text=Server+Setup" alt="Linux Server Setup">
+<h4>Linux Server Setup</h4>
+<p>Configured CentOS and Ubuntu servers for clients.</p>
+</div>
+<div class="portfolio-item" data-title="Firewall & Security" data-description="Implemented firewall rules, SSH hardening, and updates." data-img="https://via.placeholder.com/400x200.png?text=Security">
+<img src="https://via.placeholder.com/400x200.png?text=Security" alt="Firewall & Security">
+<h4>Firewall & Security</h4>
+<p>Implemented firewall rules, SSH hardening, and updates.</p>
+</div>
+<div class="portfolio-item" data-title="Web Server Setup" data-description="Apache/Nginx configuration for web applications." data-img="https://via.placeholder.com/400x200.png?text=Web+Server">
+<img src="https://via.placeholder.com/400x200.png?text=Web+Server" alt="Web Server Setup">
+<h4>Web Server Setup</h4>
+<p>Apache/Nginx configuration for web applications.</p>
+</div>
+</div>
+</section>
+
+<section class="card" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+<div style="flex:1;min-width:220px">
+<h4>Ready to start?</h4>
+<p style="margin:0;color:rgba(255,255,255,0.88)">Click the button to contact me on Fiverr. I'll review your requirements and respond with clear next steps.</p>
+</div>
+<div style="min-width:220px;text-align:right">
+<a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
+</div>
+</section>
+
+<footer>
+© <span id="year"></span> AmmarSysAdmin — Linux & Server Management
+</footer>
+</main>
+</div>
+
+<!-- Portfolio Modal -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="modal-close" id="modal-close">&times;</span>
+<img id="modal-img" src="">
+<h4 id="modal-title"></h4>
+<p id="modal-desc"></p>
+</div>
+</div>
+
+<script>
+// Set year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Typing/fading subtitle animation
+const subtitles = ["Linux Administrator • Server Management • Web Servers • Bash Scripting", "Secure, Optimized, Reliable Servers", "Automation with Bash Scripts"];
+let idx = 0, char = 0;
+const subtitleEl = document.getElementById('subtitle');
+function typeSubtitle(){
+  if(char < subtitles[idx].length){
+    subtitleEl.textContent += subtitles[idx].charAt(char);
+    char++;
+    setTimeout(typeSubtitle,40);
+  } else {
+    setTimeout(()=>{ subtitleEl.textContent=""; char=0; idx=(idx+1)%subtitles.length; typeSubtitle(); },2000);
+  }
+}
+typeSubtitle();
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href')).scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// Portfolio modal
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modal-img');
+const modalTitle = document.getElementById('modal-title');
+const modalDesc = document.getElementById('modal-desc');
+const modalClose = document.getElementById('modal-close');
+document.querySelectorAll('.portfolio-item').forEach(item=>{
+  item.addEventListener('click', ()=>{
+    modal.style.display='flex';
+    modalImg.src=item.dataset.img;
+    modalTitle.textContent=item.dataset.title;
+    modalDesc.textContent=item.dataset.description;
+  });
+});
+modalClose.addEventListener('click', ()=>modal.style.display='none');
+window.addEventListener('click', e=>{ if(e.target==modal) modal.style.display='none'; });
+
+// Particles
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let w=canvas.width=window.innerWidth;
+let h=canvas.height=window.innerHeight;
+let particlesArray=[];
+const numParticles=60;
+class Particle{
+  constructor(){
+    this.x=Math.random()*w;
+    this.y=Math.random()*h;
+    this.size=Math.random()*3+1;
+    this.speedX=Math.random()*1-0.5;
+    this.speedY=Math.random()*1-0.5;
+  }
+  update(){
+    this.x+=this.speedX; this.y+=this.speedY;
+    if(this.x>w)this.x=0; if(this.x<0)this.x=w;
+    if(this.y>h)this.y=0; if(this.y<0)this.y=h;
+  }
+  draw(){ ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();}
+}
+function initParticles(){ particlesArray=[]; for(let i=0;i<numParticles;i++) particlesArray.push(new Particle()); }
+function animateParticles(){
+  ctx.clearRect(0,0,w,h);
+  for(let i=0;i<particlesArray.length;i++){
+    particlesArray[i].update(); particlesArray[i].draw();
+    for(let j=i+1;j<particlesArray.length;j++){
+      let dx=particlesArray[i].x-particlesArray[j].x;
+      let dy=particlesArray[i].y-particlesArray[j].y;
+      let dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<120){
+        ctx.strokeStyle='rgba(255,255,255,'+(0.3-dist/400)+')';
+        ctx.lineWidth=1;
+        ctx.beginPath();
+        ctx.moveTo(particlesArray[i].x,particlesArray[i].y);
+        ctx.lineTo(particlesArray[j].x,particlesArray[j].y);
+        ctx.stroke();
       }
     }
-    function eraseText(){
-      if(charIndex>0){
-        currentText = currentText.slice(0,-1);
-        subtitleEl.textContent = currentText;
-        charIndex--;
-        setTimeout(eraseText, 50);
-      } else {
-        index = (index+1)%texts.length;
-        setTimeout(typeText, 300);
-      }
-    }
-    typeText();
-
-    // Portfolio modal
-    const modal = document.getElementById('portfolioModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalClose = document.getElementById('modalClose');
-    document.querySelectorAll('.portfolio-item').forEach(item=>{
-      item.addEventListener('click', ()=>{
-        modal.style.display = 'flex';
-        modalImg.src = item.dataset.img;
-        modalTitle.textContent = item.dataset.title;
-        modalDesc.textContent = item.dataset.description;
-      });
-    });
-    modalClose.addEventListener('click', ()=> modal.style.display='none');
-    window.addEventListener('click', e=>{ if(e.target==modal) modal.style.display='none'; });
-
-    // Particles with connecting lines
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    let w = canvas.width = window.innerWidth;
-    let h = canvas.height = window.innerHeight;
-    let particlesArray = [];
-    const numParticles = 60;
-    class Particle{
-      constructor(){
-        this.x=Math.random()*w;
-        this.y=Math.random()*h;
-        this.size=Math.random()*3+1;
-        this.speedX=Math.random()*1-0.5;
-        this.speedY=Math.random()*1-0.5;
-      }
-      update(){
-        this.x+=this.speedX; this.y+=this.speedY;
-        if(this.x>w)this.x=0; if(this.x<0)this.x=w;
-        if(this.y>h)this.y=0; if(this.y<0)this.y=h;
-      }
-      draw(){ ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();}
-    }
-    function init(){ particlesArray=[]; for(let i=0;i<numParticles;i++) particlesArray.push(new Particle()); }
-    function animate(){
-      ctx.clearRect(0,0,w,h);
-      for(let i=0;i<particlesArray.length;i++){
-        particlesArray[i].update(); particlesArray[i].draw();
-        for(let j=i+1;j<particlesArray.length;j++){
-          let dx = particlesArray[i].x - particlesArray[j].x;
-          let dy = particlesArray[i].y - particlesArray[j].y;
-          let dist = Math.sqrt(dx*dx+dy*dy);
-          if(dist<120){
-            ctx.strokeStyle='rgba(255,255,255,'+(0.3-dist/400)+')';
-            ctx.lineWidth=1;
-            ctx.beginPath();
-            ctx.moveTo(particlesArray[i].x,particlesArray[i].y);
-            ctx.lineTo(particlesArray[j].x,particlesArray[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(animate);
-    }
-    window.addEventListener('resize',()=>{
-      w=canvas.width=window.innerWidth;
-      h=canvas.height=window.innerHeight;
-      init();
-    });
-    init(); animate();
-  </script>
+  }
+  requestAnimationFrame(animateParticles);
+}
+window.addEventListener('resize', ()=>{
+  w=canvas.width=window.innerWidth;
+  h=canvas.height=window.innerHeight;
+  initParticles();
+});
+initParticles(); animateParticles();
+</script>
 </body>
 </html>
