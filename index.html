@@ -82,18 +82,17 @@
     .subtitle{
       margin:8px 0 0 0;
       color:white;
-      opacity:0.95;
       font-size:15px;
-      animation:fadeInUp 1.4s ease forwards;
       opacity:0;
+      animation:fadeInUp 1.4s ease forwards;
     }
     .actions{
       margin-top:14px;
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      animation:fadeInUp 1.6s ease forwards;
       opacity:0;
+      animation:fadeInUp 1.6s ease forwards;
     }
     .btn{
       display:inline-block;
@@ -139,13 +138,13 @@
       animation:fadeInUp 1.8s ease forwards;
       opacity:0;
     }
-    .services-grid{
+    .services-grid, .portfolio-grid{
       display:grid;
       grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
       gap:14px;
       margin-top:12px;
     }
-    .service{
+    .service, .portfolio-item{
       background: rgba(255,255,255,0.05);
       padding:16px;
       border-radius:12px;
@@ -154,9 +153,9 @@
       flex-direction:column;
       gap:8px;
       transition: transform .2s ease, box-shadow .2s ease;
-      cursor:default;
+      cursor:pointer;
     }
-    .service:hover{
+    .service:hover, .portfolio-item:hover{
       transform: translateY(-8px);
       box-shadow: 0 16px 30px rgba(0,0,0,0.28);
     }
@@ -165,8 +164,8 @@
       background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
       color:white;font-weight:700;font-size:18px;
     }
-    .service h4{ margin:0;font-size:16px;color:white}
-    .service p{ margin:0;color:rgba(255,255,255,0.95); font-size:13px; line-height:1.35 }
+    .service h4, .portfolio-item h4{ margin:0;font-size:16px;color:white}
+    .service p, .portfolio-item p{ margin:0;color:rgba(255,255,255,0.95); font-size:13px; line-height:1.35 }
     #about p{ color:#0f1720; font-size:15px; margin:6px 0 0 0; line-height:1.5; }
     .about-wrap{ background:white;padding:18px;border-radius:14px;color:var(--text); box-shadow:0 12px 30px rgba(2,6,23,0.12) }
     footer{
@@ -185,6 +184,26 @@
       .title{font-size:22px}
       .hero{text-align:center}
       .actions{justify-content:center}
+    }
+    /* Modal styles for portfolio */
+    .modal{
+      display:none; 
+      position:fixed; 
+      z-index:10; 
+      left:0; top:0; width:100%; height:100%; 
+      background:rgba(0,0,0,0.85);
+      justify-content:center;
+      align-items:center;
+    }
+    .modal-content{
+      background:white; color:#0f1720;
+      padding:20px; border-radius:12px; max-width:600px;
+      max-height:80%; overflow:auto; text-align:left;
+      position:relative;
+    }
+    .modal-content img{ width:100%; border-radius:10px; margin-bottom:10px; }
+    .modal-close{
+      position:absolute; top:10px; right:12px; cursor:pointer; font-size:20px; font-weight:bold;
     }
   </style>
 </head>
@@ -206,7 +225,7 @@
 
       <div class="hero">
         <h1 class="title">AmmarSysAdmin</h1>
-        <div class="subtitle">Linux Administrator • Server Management • Web Servers (Apache / Nginx) • Bash Scripting</div>
+        <div class="subtitle" id="subtitle">Linux Administrator • Server Management • Web Servers</div>
         <div class="actions">
           <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
           <a class="btn btn-secondary" href="#services">View My Services</a>
@@ -260,6 +279,33 @@
         </div>
       </section>
 
+      <!-- Portfolio Section -->
+      <section class="card" id="portfolio">
+        <h3>My Portfolio</h3>
+        <div class="portfolio-grid">
+          <div class="portfolio-item" data-title="Linux Server Setup" data-description="CentOS and Ubuntu server configured for hosting multiple websites." data-img="https://via.placeholder.com/400x200.png?text=Server+Setup">
+            <img src="https://via.placeholder.com/400x200.png?text=Server+Setup" alt="Server Setup">
+            <h4>Linux Server Setup</h4>
+            <p>CentOS and Ubuntu server configured for hosting multiple websites.</p>
+          </div>
+          <div class="portfolio-item" data-title="Server Security" data-description="Firewall rules, SSH hardening, and monitoring implemented." data-img="https://via.placeholder.com/400x200.png?text=Security">
+            <img src="https://via.placeholder.com/400x200.png?text=Security" alt="Server Security">
+            <h4>Server Security</h4>
+            <p>Firewall rules, SSH hardening, and monitoring implemented.</p>
+          </div>
+          <div class="portfolio-item" data-title="Bash Scripts" data-description="Automated backups, log monitoring, and server maintenance scripts." data-img="https://via.placeholder.com/400x200.png?text=Bash+Scripts">
+            <img src="https://via.placeholder.com/400x200.png?text=Bash+Scripts" alt="Bash Scripts">
+            <h4>Bash Scripts</h4>
+            <p>Automated backups, log monitoring, and server maintenance scripts.</p>
+          </div>
+          <div class="portfolio-item" data-title="DNS & Networking" data-description="DNS records configured for multiple domains with reliability." data-img="https://via.placeholder.com/400x200.png?text=DNS">
+            <img src="https://via.placeholder.com/400x200.png?text=DNS" alt="DNS & Networking">
+            <h4>DNS & Networking</h4>
+            <p>DNS records configured for multiple domains with reliability.</p>
+          </div>
+        </div>
+      </section>
+
       <section class="card" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
         <div style="flex:1;min-width:220px">
           <h4>Ready to start?</h4>
@@ -274,6 +320,16 @@
         © <span id="year"></span> AmmarSysAdmin — Linux & Server Management
       </footer>
     </main>
+  </div>
+
+  <!-- Modal for portfolio -->
+  <div class="modal" id="portfolioModal">
+    <div class="modal-content">
+      <span class="modal-close" id="modalClose">&times;</span>
+      <img id="modalImg" src="" alt="">
+      <h4 id="modalTitle"></h4>
+      <p id="modalDesc"></p>
+    </div>
   </div>
 
   <script>
@@ -295,62 +351,101 @@
       }
     })();
 
-    // Simple particles background
+    // Typing effect for subtitle
+    const subtitleEl = document.getElementById('subtitle');
+    const texts = ["Linux Administrator", "Server Management", "Web Servers", "Security & Bash Scripting"];
+    let index = 0;
+    let charIndex = 0;
+    let currentText = "";
+    function typeText(){
+      if(charIndex < texts[index].length){
+        currentText += texts[index][charIndex];
+        subtitleEl.textContent = currentText;
+        charIndex++;
+        setTimeout(typeText, 100);
+      } else {
+        setTimeout(eraseText, 1000);
+      }
+    }
+    function eraseText(){
+      if(charIndex>0){
+        currentText = currentText.slice(0,-1);
+        subtitleEl.textContent = currentText;
+        charIndex--;
+        setTimeout(eraseText, 50);
+      } else {
+        index = (index+1)%texts.length;
+        setTimeout(typeText, 300);
+      }
+    }
+    typeText();
+
+    // Portfolio modal
+    const modal = document.getElementById('portfolioModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalClose');
+    document.querySelectorAll('.portfolio-item').forEach(item=>{
+      item.addEventListener('click', ()=>{
+        modal.style.display = 'flex';
+        modalImg.src = item.dataset.img;
+        modalTitle.textContent = item.dataset.title;
+        modalDesc.textContent = item.dataset.description;
+      });
+    });
+    modalClose.addEventListener('click', ()=> modal.style.display='none');
+    window.addEventListener('click', e=>{ if(e.target==modal) modal.style.display='none'; });
+
+    // Particles with connecting lines
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let w = canvas.width = window.innerWidth;
     let h = canvas.height = window.innerHeight;
     let particlesArray = [];
     const numParticles = 60;
-
-    class Particle {
+    class Particle{
       constructor(){
-        this.x = Math.random()*w;
-        this.y = Math.random()*h;
-        this.size = Math.random()*3+1;
-        this.speedX = Math.random()*1-0.5;
-        this.speedY = Math.random()*1-0.5;
+        this.x=Math.random()*w;
+        this.y=Math.random()*h;
+        this.size=Math.random()*3+1;
+        this.speedX=Math.random()*1-0.5;
+        this.speedY=Math.random()*1-0.5;
       }
       update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if(this.x>w) this.x=0;
-        if(this.x<0) this.x=w;
-        if(this.y>h) this.y=0;
-        if(this.y<0) this.y=h;
+        this.x+=this.speedX; this.y+=this.speedY;
+        if(this.x>w)this.x=0; if(this.x<0)this.x=w;
+        if(this.y>h)this.y=0; if(this.y<0)this.y=h;
       }
-      draw(){
-        ctx.fillStyle='rgba(255,255,255,0.7)';
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fill();
-      }
+      draw(){ ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();}
     }
-
-    function init(){
-      particlesArray = [];
-      for(let i=0;i<numParticles;i++){
-        particlesArray.push(new Particle());
-      }
-    }
-
+    function init(){ particlesArray=[]; for(let i=0;i<numParticles;i++) particlesArray.push(new Particle()); }
     function animate(){
       ctx.clearRect(0,0,w,h);
-      particlesArray.forEach(p=>{
-        p.update();
-        p.draw();
-      });
+      for(let i=0;i<particlesArray.length;i++){
+        particlesArray[i].update(); particlesArray[i].draw();
+        for(let j=i+1;j<particlesArray.length;j++){
+          let dx = particlesArray[i].x - particlesArray[j].x;
+          let dy = particlesArray[i].y - particlesArray[j].y;
+          let dist = Math.sqrt(dx*dx+dy*dy);
+          if(dist<120){
+            ctx.strokeStyle='rgba(255,255,255,'+(0.3-dist/400)+')';
+            ctx.lineWidth=1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[i].x,particlesArray[i].y);
+            ctx.lineTo(particlesArray[j].x,particlesArray[j].y);
+            ctx.stroke();
+          }
+        }
+      }
       requestAnimationFrame(animate);
     }
-
     window.addEventListener('resize',()=>{
-      w = canvas.width = window.innerWidth;
-      h = canvas.height = window.innerHeight;
+      w=canvas.width=window.innerWidth;
+      h=canvas.height=window.innerHeight;
       init();
     });
-
-    init();
-    animate();
+    init(); animate();
   </script>
 </body>
 </html>
