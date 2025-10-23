@@ -81,7 +81,6 @@ header{
   margin:8px 0 0 0;
   color:white;
   font-size:15px;
-  min-height:20px;
 }
 .actions{
   margin-top:14px;
@@ -200,21 +199,10 @@ footer{
 <canvas id="particles"></canvas>
 <div class="wrap">
 <header>
-  <svg class="logo" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style="stop-color:#6a11cb;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#2575fc;stop-opacity:1" />
-      </linearGradient>
-    </defs>
-    <circle cx="42" cy="42" r="42" fill="url(#grad1)" />
-    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-          font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="white">AS</text>
-  </svg>
-
+  <div class="logo">AS</div>
   <div class="hero">
     <h1 class="title">AmmarSysAdmin</h1>
-    <div class="subtitle" id="subtitle"></div>
+    <div class="subtitle">Linux Administrator • Server Management • Web Servers • Bash Scripting</div>
     <div class="actions">
       <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
       <a class="btn btn-secondary" href="#services">View My Services</a>
@@ -244,7 +232,6 @@ My work includes server setup, security hardening, web server configuration, and
 </div>
 </section>
 
-<!-- Portfolio Section -->
 <section class="card" id="portfolio">
 <h3>Portfolio</h3>
 <div class="portfolio-grid">
@@ -280,7 +267,6 @@ My work includes server setup, security hardening, web server configuration, and
 </main>
 </div>
 
-<!-- Portfolio Modal -->
 <div class="modal" id="modal">
 <div class="modal-content">
 <span class="modal-close" id="modal-close">&times;</span>
@@ -293,21 +279,6 @@ My work includes server setup, security hardening, web server configuration, and
 <script>
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
-
-// Subtitle animation
-const subtitles=["Linux Administrator • Server Management • Web Servers • Bash Scripting","Secure & Reliable Servers","Automation with Bash Scripts"];
-let idx=0,char=0;
-const subtitleEl=document.getElementById('subtitle');
-function typeSubtitle(){
-  if(char<subtitles[idx].length){
-    subtitleEl.textContent+=subtitles[idx].charAt(char);
-    char++;
-    setTimeout(typeSubtitle,40);
-  } else {
-    setTimeout(()=>{ subtitleEl.textContent=""; char=0; idx=(idx+1)%subtitles.length; typeSubtitle(); },2000);
-  }
-}
-typeSubtitle();
 
 // Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
@@ -334,7 +305,7 @@ document.querySelectorAll('.portfolio-item').forEach(item=>{
 modalClose.addEventListener('click', ()=>modal.style.display='none');
 window.addEventListener('click', e=>{ if(e.target==modal) modal.style.display='none'; });
 
-// Particles
+// Particles background
 const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
 let w=canvas.width=window.innerWidth;
