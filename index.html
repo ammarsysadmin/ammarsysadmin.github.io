@@ -276,9 +276,7 @@ My work includes server setup, security hardening, web server configuration, and
 </div>
 </section>
 
-<footer>
-© <span id="year"></span> AmmarSysAdmin — Linux & Server Management
-</footer>
+<footer>© <span id="year"></span> AmmarSysAdmin — Linux & Server Management</footer>
 </main>
 </div>
 
@@ -293,16 +291,16 @@ My work includes server setup, security hardening, web server configuration, and
 </div>
 
 <script>
-// Set year
+// Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// Typing/fading subtitle animation
-const subtitles = ["Linux Administrator • Server Management • Web Servers • Bash Scripting", "Secure, Optimized, Reliable Servers", "Automation with Bash Scripts"];
-let idx = 0, char = 0;
-const subtitleEl = document.getElementById('subtitle');
+// Subtitle animation
+const subtitles=["Linux Administrator • Server Management • Web Servers • Bash Scripting","Secure & Reliable Servers","Automation with Bash Scripts"];
+let idx=0,char=0;
+const subtitleEl=document.getElementById('subtitle');
 function typeSubtitle(){
-  if(char < subtitles[idx].length){
-    subtitleEl.textContent += subtitles[idx].charAt(char);
+  if(char<subtitles[idx].length){
+    subtitleEl.textContent+=subtitles[idx].charAt(char);
     char++;
     setTimeout(typeSubtitle,40);
   } else {
@@ -320,11 +318,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 
 // Portfolio modal
-const modal = document.getElementById('modal');
-const modalImg = document.getElementById('modal-img');
-const modalTitle = document.getElementById('modal-title');
-const modalDesc = document.getElementById('modal-desc');
-const modalClose = document.getElementById('modal-close');
+const modal=document.getElementById('modal');
+const modalImg=document.getElementById('modal-img');
+const modalTitle=document.getElementById('modal-title');
+const modalDesc=document.getElementById('modal-desc');
+const modalClose=document.getElementById('modal-close');
 document.querySelectorAll('.portfolio-item').forEach(item=>{
   item.addEventListener('click', ()=>{
     modal.style.display='flex';
@@ -337,54 +335,21 @@ modalClose.addEventListener('click', ()=>modal.style.display='none');
 window.addEventListener('click', e=>{ if(e.target==modal) modal.style.display='none'; });
 
 // Particles
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
+const canvas=document.getElementById('particles');
+const ctx=canvas.getContext('2d');
 let w=canvas.width=window.innerWidth;
 let h=canvas.height=window.innerHeight;
 let particlesArray=[];
 const numParticles=60;
 class Particle{
-  constructor(){
-    this.x=Math.random()*w;
-    this.y=Math.random()*h;
-    this.size=Math.random()*3+1;
-    this.speedX=Math.random()*1-0.5;
-    this.speedY=Math.random()*1-0.5;
-  }
-  update(){
-    this.x+=this.speedX; this.y+=this.speedY;
-    if(this.x>w)this.x=0; if(this.x<0)this.x=w;
-    if(this.y>h)this.y=0; if(this.y<0)this.y=h;
-  }
-  draw(){ ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();}
+  constructor(){this.x=Math.random()*w;this.y=Math.random()*h;this.size=Math.random()*3+1;this.speedX=Math.random()*1-0.5;this.speedY=Math.random()*1-0.5;}
+  update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x>w)this.x=0;if(this.x<0)this.x=w;if(this.y>h)this.y=0;if(this.y<0)this.y=h;}
+  draw(){ctx.fillStyle='rgba(255,255,255,0.7)';ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();}
 }
-function initParticles(){ particlesArray=[]; for(let i=0;i<numParticles;i++) particlesArray.push(new Particle()); }
-function animateParticles(){
-  ctx.clearRect(0,0,w,h);
-  for(let i=0;i<particlesArray.length;i++){
-    particlesArray[i].update(); particlesArray[i].draw();
-    for(let j=i+1;j<particlesArray.length;j++){
-      let dx=particlesArray[i].x-particlesArray[j].x;
-      let dy=particlesArray[i].y-particlesArray[j].y;
-      let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){
-        ctx.strokeStyle='rgba(255,255,255,'+(0.3-dist/400)+')';
-        ctx.lineWidth=1;
-        ctx.beginPath();
-        ctx.moveTo(particlesArray[i].x,particlesArray[i].y);
-        ctx.lineTo(particlesArray[j].x,particlesArray[j].y);
-        ctx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(animateParticles);
-}
-window.addEventListener('resize', ()=>{
-  w=canvas.width=window.innerWidth;
-  h=canvas.height=window.innerHeight;
-  initParticles();
-});
-initParticles(); animateParticles();
+function initParticles(){particlesArray=[];for(let i=0;i<numParticles;i++)particlesArray.push(new Particle());}
+function animateParticles(){ctx.clearRect(0,0,w,h);for(let i=0;i<particlesArray.length;i++){particlesArray[i].update();particlesArray[i].draw();for(let j=i+1;j<particlesArray.length;j++){let dx=particlesArray[i].x-particlesArray[j].x;let dy=particlesArray[i].y-particlesArray[j].y;let dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.strokeStyle='rgba(255,255,255,'+(0.3-dist/400)+')';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(particlesArray[i].x,particlesArray[i].y);ctx.lineTo(particlesArray[j].x,particlesArray[j].y);ctx.stroke();}}}requestAnimationFrame(animateParticles);}
+window.addEventListener('resize', ()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;initParticles();});
+initParticles();animateParticles();
 </script>
 </body>
 </html>
