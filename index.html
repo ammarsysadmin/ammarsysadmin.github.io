@@ -1,98 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AmmarSysAdmin | Linux & Server Management</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AmmarSysAdmin — Linux & Server Management</title>
+  <meta name="description" content="Muhammad Ammar — Linux Administrator. Server setup, security, web servers (Apache/Nginx), Bash scripting." />
   <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: linear-gradient(180deg, #004aad, #0078d7);
-      color: white;
-      margin: 0;
-      padding: 0;
-      text-align: center;
+    :root{
+      --bg-start:#e6f4ff;
+      --bg-end:#0078D7;
+      --card-bg: rgba(255,255,255,0.08);
+      --accent:#0078D7;
+      --text:#0f1720;
+      --muted: rgba(15,23,32,0.75);
     }
-    header {
-      padding: 60px 20px 20px;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      background: linear-gradient(135deg,var(--bg-start),var(--bg-end));
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:36px 16px;
     }
-    header h1 {
-      font-size: 2.4em;
-      margin-bottom: 10px;
+
+    .wrap{
+      width:100%;
+      max-width:980px;
+      margin:12px auto;
+      animation:fadeIn .6s ease both;
     }
-    header p {
-      font-size: 1.2em;
-      opacity: 0.9;
+
+    header{
+      display:flex;
+      gap:18px;
+      align-items:center;
+      background: transparent;
+      padding:18px;
+      border-radius:12px;
     }
-    .buttons {
-      margin-top: 30px;
+
+    .logo{
+      width:84px;
+      height:84px;
+      border-radius:14px;
+      background:linear-gradient(180deg,rgba(255,255,255,0.18),rgba(255,255,255,0.06));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:700;
+      font-size:20px;
+      color:white;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
-    .btn {
-      display: inline-block;
-      margin: 8px;
-      padding: 12px 24px;
-      border-radius: 30px;
-      text-decoration: none;
-      color: #004aad;
+
+    .hero {
+      flex:1;
+      text-align:left;
+    }
+
+    .title{
+      margin:0;
+      font-size:26px;
+      color:white;
+      line-height:1.05;
+      font-weight:700;
+      text-shadow:0 2px 8px rgba(0,0,0,0.18);
+    }
+    .subtitle{
+      margin:8px 0 0 0;
+      color:rgba(255,255,255,0.92);
+      opacity:0.95;
+      font-size:15px;
+    }
+
+    .actions{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-block;
+      padding:10px 16px;
+      border-radius:10px;
+      text-decoration:none;
+      font-weight:600;
+      cursor:pointer;
+      border:0;
+      transition:transform .12s ease, box-shadow .12s ease;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    }
+    .btn-primary{
       background: white;
-      font-weight: bold;
-      transition: 0.3s;
+      color:var(--accent);
+      border:1px solid rgba(255,255,255,0.2);
     }
-    .btn:hover {
-      background: #f0f0f0;
-      transform: translateY(-2px);
+    .btn-secondary{
+      background: transparent;
+      color: white;
+      border:1px solid rgba(255,255,255,0.18);
     }
-    section {
-      padding: 50px 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      margin: 20px auto;
-      width: 90%;
-      max-width: 800px;
+    .btn:hover{ transform:translateY(-3px) }
+
+    main{
+      margin-top:18px;
+      display:flex;
+      gap:20px;
+      flex-direction:column;
     }
-    section h2 {
-      font-size: 1.8em;
-      margin-bottom: 15px;
+
+    .card {
+      background: var(--card-bg);
+      padding:18px;
+      border-radius:12px;
+      box-shadow: 0 10px 30px rgba(3,10,25,0.10);
+      color:white;
     }
-    footer {
-      margin-top: 60px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.2);
-      font-size: 0.9em;
+
+    .services-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .service{
+      background: rgba(255,255,255,0.04);
+      padding:14px;
+      border-radius:10px;
+      min-height:110px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      transition: transform .16s ease, box-shadow .16s ease;
+      cursor:default;
+    }
+    .service:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.18);
+    }
+
+    .service .icon{
+      width:40px;height:40px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      color:white;font-weight:700;
+    }
+    .service h4{ margin:0;font-size:16px;color:white}
+    .service p{ margin:0;color:rgba(255,255,255,0.85); font-size:13px; line-height:1.35 }
+
+    #about p{ color:var(--muted); font-size:15px; margin:6px 0 0 0; line-height:1.5; background:transparent; color: rgba(15,23,32,0.05); }
+    /* Use a subtle panel for the about so it contrasts with hero */
+    .about-wrap{ background:white;padding:18px;border-radius:12px;color:var(--text); box-shadow:0 10px 30px rgba(2,6,23,0.08) }
+
+    footer{
+      margin-top:18px;
+      text-align:center;
+      color:rgba(255,255,255,0.9);
+      font-size:13px;
+      opacity:0.95;
+    }
+
+    @keyframes fadeIn { from {opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
+
+    /* responsive */
+    @media (max-width:720px){
+      .logo{width:64px;height:64px;font-size:18px}
+      .title{font-size:20px}
+      .hero{text-align:center}
+      .actions{justify-content:center}
+      header{flex-direction:column;align-items:center;gap:12px}
+      #about p{color:#444}
+      .about-wrap{background:#fff}
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Muhammad Ammar</h1>
-    <p>Linux Administrator | Server Management Expert</p>
-    <div class="buttons">
-      <a class="btn" href="https://www.fiverr.com/ammarsysadmin" target="_blank">Hire me on Fiverr</a>
-      <a class="btn" href="#portfolio">Portfolio</a>
-    </div>
-  </header>
+  <div class="wrap">
+    <header>
+      <!-- If you later upload a logo image to the repo, replace this block with an <img> tag -->
+      <div class="logo" title="Ammar SysAdmin">AS</div>
 
-  <section id="portfolio">
-    <h2>My Services</h2>
-    <p>✔️ Linux Server Setup (CentOS, Ubuntu, Red Hat)</p>
-    <p>✔️ Web Server Configuration (Apache, Nginx)</p>
-    <p>✔️ Security Hardening & Firewall Setup</p>
-    <p>✔️ DNS, SSH & Troubleshooting</p>
-    
-  </section>
+      <div class="hero">
+        <h1 class="title">Muhammad Ammar — Ammar SysAdmin</h1>
+        <div class="subtitle">Linux Administrator • Server Management • Web servers (Apache / Nginx) • Bash scripting</div>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
-      I'm Muhammad Ammar, a passionate Linux Administrator skilled in managing
-      servers, configuring networks, and optimizing performance. I focus on
-      delivering secure, reliable, and efficient environments for clients
-      worldwide.
-    </p>
-  </section>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
+          <a class="btn btn-secondary" href="#services">View My Services</a>
+        </div>
+      </div>
+    </header>
 
-  <footer>
-    © 2025 Muhammad Ammar | AmmarSysAdmin
-  </footer>
+    <main>
+      <section class="card about-wrap" id="about">
+        <h3 style="margin:0 0 8px 0">About Me</h3>
+        <p>
+          I'm Muhammad Ammar, a focused Linux Administrator experienced with CentOS, Ubuntu, and Red Hat systems.
+          I build and maintain clean, secure, and efficient server environments so your sites and apps run reliably.
+          I provide clear reports and use secure access for all work.
+        </p>
+      </section>
+
+      <section class="card" id="services">
+        <h3 style="margin:0 0 12px 0">My Services</h3>
+        <div class="services-grid">
+          <div class="service">
+            <div class="icon">🖥️</div>
+            <h4>Linux Server Setup</h4>
+            <p>Install and configure CentOS, Ubuntu, or Red Hat with optimized settings for web hosting and apps.</p>
+          </div>
+
+          <div class="service">
+            <div class="icon">🔒</div>
+            <h4>Security Configuration</h4>
+            <p>Firewall rules, SSH hardening, updates, and best practices to protect your server and data.</p>
+          </div>
+
+          <div class="service">
+            <div class="icon">🌐</div>
+            <h4>DNS & Networking</h4>
+            <p>Configure DNS records, hostnames, and network settings to ensure reliable domain and connectivity.</p>
+          </div>
+
+          <div class="service">
+            <div class="icon">🔑</div>
+            <h4>SSH Access Setup</h4>
+            <p>Secure SSH key setup, user management, and permission control for safe remote administration.</p>
+          </div>
+
+          <div class="service">
+            <div class="icon">⚙️</div>
+            <h4>Bash Scripting</h4>
+            <p>Automate tasks with Bash scripts: backups, updates, monitoring tasks and routine maintenance.</p>
+          </div>
+
+          <div class="service">
+            <div class="icon">🧩</div>
+            <h4>Server Management</h4>
+            <p>Ongoing maintenance, log checks, troubleshooting, and performance tuning to keep your server stable.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <h4 style="margin:0 0 8px 0">Ready to start?</h4>
+          <p style="margin:0;color:rgba(255,255,255,0.88)">Click the button to contact me on Fiverr. I'll review your requirements and respond with clear next steps.</p>
+        </div>
+        <div style="min-width:220px;text-align:right">
+          <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> Ammar SysAdmin — Linux & Server Management
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // smooth scroll for "View My Services"
+    (function(){
+      var btns = document.querySelectorAll('a[href^="#"]');
+      for(var i=0;i<btns.length;i++){
+        btns[i].addEventListener('click', function(e){
+          var href = this.getAttribute('href');
+          if(href && href.startsWith('#')){
+            e.preventDefault();
+            var el = document.querySelector(href);
+            if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
