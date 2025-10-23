@@ -192,7 +192,6 @@
   <canvas id="particles"></canvas>
   <div class="wrap">
     <header>
-      <!-- Animated Logo SVG -->
       <svg class="logo" viewBox="0 0 84 84" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -202,4 +201,156 @@
         </defs>
         <circle cx="42" cy="42" r="42" fill="url(#grad1)" />
         <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-              font-family="Inter, sans-serif" font-size="28" font
+              font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="white">AS</text>
+      </svg>
+
+      <div class="hero">
+        <h1 class="title">AmmarSysAdmin</h1>
+        <div class="subtitle">Linux Administrator • Server Management • Web Servers (Apache / Nginx) • Bash Scripting</div>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
+          <a class="btn btn-secondary" href="#services">View My Services</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card about-wrap" id="about">
+        <h3>About Me</h3>
+        <p>
+          I'm AmmarSysAdmin, a professional Linux Administrator. I specialize in CentOS, Ubuntu, and Red Hat servers. 
+          I ensure your servers are secure, optimized, and maintained for reliable uptime. 
+          My work includes server setup, security hardening, web server configuration, and automation through Bash scripting.
+        </p>
+      </section>
+
+      <section class="card" id="services">
+        <h3>My Services</h3>
+        <div class="services-grid">
+          <div class="service">
+            <div class="icon">🖥️</div>
+            <h4>Linux Server Setup</h4>
+            <p>Install and configure CentOS, Ubuntu, or Red Hat with optimized settings for web hosting and apps.</p>
+          </div>
+          <div class="service">
+            <div class="icon">🔒</div>
+            <h4>Security Configuration</h4>
+            <p>Firewall rules, SSH hardening, updates, and best practices to protect your server and data.</p>
+          </div>
+          <div class="service">
+            <div class="icon">🌐</div>
+            <h4>DNS & Networking</h4>
+            <p>Configure DNS records, hostnames, and network settings to ensure reliable domain and connectivity.</p>
+          </div>
+          <div class="service">
+            <div class="icon">🔑</div>
+            <h4>SSH Access Setup</h4>
+            <p>Secure SSH key setup, user management, and permission control for safe remote administration.</p>
+          </div>
+          <div class="service">
+            <div class="icon">⚙️</div>
+            <h4>Bash Scripting</h4>
+            <p>Automate tasks with Bash scripts: backups, updates, monitoring tasks and routine maintenance.</p>
+          </div>
+          <div class="service">
+            <div class="icon">🧩</div>
+            <h4>Server Management</h4>
+            <p>Ongoing maintenance, log checks, troubleshooting, and performance tuning to keep your server stable.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+        <div style="flex:1;min-width:220px">
+          <h4>Ready to start?</h4>
+          <p style="margin:0;color:rgba(15,23,32,0.9)">Click the button to contact me on Fiverr. I'll review your requirements and respond with clear next steps.</p>
+        </div>
+        <div style="min-width:220px;text-align:right">
+          <a class="btn btn-primary" href="https://www.fiverr.com/ammarsysadmin" target="_blank" rel="noopener">Contact Me on Fiverr</a>
+        </div>
+      </section>
+
+      <footer>
+        © <span id="year"></span> AmmarSysAdmin — Linux & Server Management
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Smooth scroll
+    (function(){
+      var btns = document.querySelectorAll('a[href^="#"]');
+      for(var i=0;i<btns.length;i++){
+        btns[i].addEventListener('click', function(e){
+          var href = this.getAttribute('href');
+          if(href && href.startsWith('#')){
+            e.preventDefault();
+            var el = document.querySelector(href);
+            if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+          }
+        });
+      }
+    })();
+
+    // Simple particles background
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
+    let particlesArray = [];
+    const numParticles = 60;
+
+    class Particle {
+      constructor(){
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        this.size = Math.random()*3+1;
+        this.speedX = Math.random()*1-0.5;
+        this.speedY = Math.random()*1-0.5;
+      }
+      update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if(this.x>w) this.x=0;
+        if(this.x<0) this.x=w;
+        if(this.y>h) this.y=0;
+        if(this.y<0) this.y=h;
+      }
+      draw(){
+        ctx.fillStyle='rgba(255,255,255,0.7)';
+        ctx.beginPath();
+        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        ctx.fill();
+      }
+    }
+
+    function init(){
+      particlesArray = [];
+      for(let i=0;i<numParticles;i++){
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function animate(){
+      ctx.clearRect(0,0,w,h);
+      particlesArray.forEach(p=>{
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize',()=>{
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      init();
+    });
+
+    init();
+    animate();
+  </script>
+</body>
+</html>
